@@ -11,29 +11,24 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Http Network
+
+Pakcage for handle reqeusts to restful api with handle error and response.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
+1. GET
+2. POST
+3. PATCH
+4. DELETE
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+1. Import this package.
+2. Create an instance of HttpNetwork.
+3. Use the instance to make HTTP requests.
 
 ```dart
-const like = 'sample';
+import 'package:http_network/http_network.dart';
+final HttpNetwork network = HttpNetwork();
+final response = await network.get('https://mock.codes/200');
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
