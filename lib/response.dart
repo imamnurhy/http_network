@@ -1,5 +1,5 @@
-class ResponseHandle {
-  ResponseHandle({
+class Response {
+  Response({
     required this.statusCode,
     required this.body,
     this.message,

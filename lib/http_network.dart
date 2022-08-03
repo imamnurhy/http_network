@@ -5,9 +5,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:http_network/response_handle.dart';
+import 'package:http_network/response.dart';
 import 'exceptions.dart';
-import 'utilities.dart';
 
 /// Package Http Network
 /// ---
@@ -31,7 +30,7 @@ import 'utilities.dart';
 ///
 /// ---
 class HttpNetwork {
-  Future<ResponseHandle> get(
+  Future<Response> get(
     String url, {
     Map<String, String> headers = const {},
     bool logs = false,
@@ -42,25 +41,20 @@ class HttpNetwork {
         headers: headers,
       );
       if (logs) log(response.body);
-      return handleResponse(response);
+
+      return handle(response);
     } on TimeoutException catch (e) {
       throw e.message.toString();
     } on SocketException catch (e) {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on ClientErrorException {
+    } on Exception {
       rethrow;
-    } on ServerErrorException {
-      rethrow;
-    } on UnknownErrorException {
-      rethrow;
-    } on Exception catch (e) {
-      throw e.toString();
     }
   }
 
-  Future<ResponseHandle> post(
+  Future<Response> post(
     String url, {
     Map<String, String> headers = const {},
     Map<String, String> body = const {},
@@ -82,11 +76,11 @@ class HttpNetwork {
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (logs) log(response.body);
-        return handleResponse(response);
+        return handle(response);
       } else {
         final response = await http.post(Uri.parse(url));
         if (logs) log(response.body);
-        return handleResponse(response);
+        return handle(response);
       }
     } on TimeoutException catch (e) {
       throw e.toString();
@@ -103,7 +97,7 @@ class HttpNetwork {
     }
   }
 
-  Future<ResponseHandle> patch(
+  Future<Response> patch(
     String url, {
     Map<String, String> headers = const {},
     Map<String, String> body = const {},
@@ -125,11 +119,11 @@ class HttpNetwork {
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (logs) log(response.body);
-        return handleResponse(response);
+        return handle(response);
       } else {
         final response = await http.patch(Uri.parse(url));
         if (logs) log(response.body);
-        return handleResponse(response);
+        return handle(response);
       }
     } on TimeoutException catch (e) {
       throw e.toString();
@@ -146,7 +140,7 @@ class HttpNetwork {
     }
   }
 
-  Future<ResponseHandle> delete(
+  Future<Response> delete(
     String url, {
     Map<String, String> headers = const {},
     bool logs = false,
@@ -157,7 +151,7 @@ class HttpNetwork {
         headers: headers,
       );
       if (logs) log(response.body);
-      return handleResponse(response);
+      return handle(response);
     } on TimeoutException catch (e) {
       throw e.toString();
     } on SocketException catch (e) {
@@ -170,6 +164,31 @@ class HttpNetwork {
       rethrow;
     } on Exception catch (e) {
       throw e.toString();
+    }
+  }
+
+  // Handle response
+  Response handle(http.Response response) {
+    if (response.statusCode >= 200 && response.statusCode < 400) {
+      return Response(
+        statusCode: response.statusCode,
+        body: response.body,
+      );
+    } else if (response.statusCode >= 400 && response.statusCode < 500) {
+      throw ClientErrorException(
+        statusCode: response.statusCode,
+        body: response.body,
+      );
+    } else if (response.statusCode >= 500 && response.statusCode < 600) {
+      throw ServerErrorException(
+        statusCode: response.statusCode,
+        body: response.body,
+      );
+    } else {
+      throw UnknownErrorException(
+        statusCode: response.statusCode,
+        body: response.body,
+      );
     }
   }
 }
