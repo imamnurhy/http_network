@@ -41,7 +41,15 @@ class HttpNetwork {
         Uri.parse(url),
         headers: headers,
       );
-      if (logs) log(response.body);
+
+      // Print Logs from response if logs is true.
+      if (logs) {
+        log(
+          url,
+          name: 'GET',
+          error: response.body,
+        );
+      }
 
       return handle(response);
     } on TimeoutException catch (e) {
@@ -76,11 +84,23 @@ class HttpNetwork {
         });
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
-        if (logs) log(response.body);
+        if (logs) {
+          log(
+            url,
+            name: 'POST',
+            error: response.body,
+          );
+        }
         return handle(response);
       } else {
         final response = await http.post(Uri.parse(url));
-        if (logs) log(response.body);
+        if (logs) {
+          log(
+            url,
+            name: 'POST',
+            error: response.body,
+          );
+        }
         return handle(response);
       }
     } on TimeoutException catch (e) {
@@ -89,10 +109,6 @@ class HttpNetwork {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on ClientErrorException catch (e) {
-      rethrow;
-    } on ServerErrorException catch (e) {
-      rethrow;
     } on Exception catch (e) {
       throw e.toString();
     }
@@ -119,11 +135,24 @@ class HttpNetwork {
         });
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
-        if (logs) log(response.body);
+
+        if (logs) {
+          log(
+            url,
+            name: 'PATCH',
+            error: response.body,
+          );
+        }
         return handle(response);
       } else {
         final response = await http.patch(Uri.parse(url));
-        if (logs) log(response.body);
+        if (logs) {
+          log(
+            url,
+            name: 'PATCH',
+            error: response.body,
+          );
+        }
         return handle(response);
       }
     } on TimeoutException catch (e) {
@@ -132,10 +161,6 @@ class HttpNetwork {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on ClientErrorException catch (e) {
-      rethrow;
-    } on ServerErrorException catch (e) {
-      rethrow;
     } on Exception catch (e) {
       throw e.toString();
     }
@@ -151,7 +176,13 @@ class HttpNetwork {
         Uri.parse(url),
         headers: headers,
       );
-      if (logs) log(response.body);
+      if (logs) {
+        log(
+          url,
+          name: 'DELETE',
+          error: response.body,
+        );
+      }
       return handle(response);
     } on TimeoutException catch (e) {
       throw e.toString();
@@ -159,10 +190,6 @@ class HttpNetwork {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on ClientErrorException catch (e) {
-      rethrow;
-    } on ServerErrorException catch (e) {
-      rethrow;
     } on Exception catch (e) {
       throw e.toString();
     }

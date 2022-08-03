@@ -9,7 +9,7 @@ void main() {
   group('Http Network GET', () {
     test('Test Success', () async {
       try {
-        final response = await network.get('https://mock.codes/200');
+        final response = await network.get('https://mock.codes/200', logs: true);
         log(response.body);
       } on ClientErrorException catch (e) {
         log(e.toString());
