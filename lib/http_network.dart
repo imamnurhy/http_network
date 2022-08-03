@@ -33,6 +33,7 @@ part 'exceptions.dart';
 ///
 /// ---
 class HttpNetwork {
+  final String _logName = 'Request';
   Future<Response> get(
     String url, {
     Map<String, String> headers = const {},
@@ -48,7 +49,7 @@ class HttpNetwork {
       if (logs) {
         developer.log(
           'GET : $url',
-          name: 'Http Network',
+          name: _logName,
           error: json.encode({
             'url': url,
             'response': {
@@ -95,7 +96,7 @@ class HttpNetwork {
         if (logs) {
           log(
             'POST : $url',
-            name: 'Http Network',
+            name: _logName,
             error: json.encode({
               'url': url,
               'body': body,
@@ -117,7 +118,7 @@ class HttpNetwork {
         if (logs) {
           log(
             'POST : $url',
-            name: 'Http Network',
+            name: _logName,
             error: json.encode({
               'url': url,
               'body': body,
@@ -166,7 +167,7 @@ class HttpNetwork {
         if (logs) {
           log(
             'PATCH : $url',
-            name: 'Http Network',
+            name: _logName,
             error: json.encode({
               'url': url,
               'body': body,
@@ -188,7 +189,7 @@ class HttpNetwork {
         if (logs) {
           log(
             'PATCH : $url',
-            name: 'Http Network',
+            name: _logName,
             error: json.encode({
               'url': url,
               'body': body,
@@ -225,7 +226,7 @@ class HttpNetwork {
       if (logs) {
         log(
           'DELETE : $url',
-          name: 'Http Network',
+          name: _logName,
           error: json.encode({
             'url': url,
             'response': {
