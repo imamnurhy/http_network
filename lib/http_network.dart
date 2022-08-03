@@ -47,8 +47,8 @@ class HttpNetwork {
       // Print Logs from response if logs is true.
       if (logs) {
         developer.log(
-          url,
-          name: 'GET',
+          'GET : $url',
+          name: 'Http Network',
           error: json.encode({
             'url': url,
             'response': {
@@ -94,8 +94,8 @@ class HttpNetwork {
         var response = await http.Response.fromStream(streamedResponse);
         if (logs) {
           log(
-            url,
-            name: 'POST',
+            'POST : $url',
+            name: 'Http Network',
             error: json.encode({
               'url': url,
               'body': body,
@@ -116,8 +116,8 @@ class HttpNetwork {
         );
         if (logs) {
           log(
-            url,
-            name: 'POST',
+            'POST : $url',
+            name: 'Http Network',
             error: json.encode({
               'url': url,
               'body': body,
@@ -165,8 +165,8 @@ class HttpNetwork {
 
         if (logs) {
           log(
-            url,
-            name: 'PATCH',
+            'PATCH : $url',
+            name: 'Http Network',
             error: json.encode({
               'url': url,
               'body': body,
@@ -187,8 +187,8 @@ class HttpNetwork {
         );
         if (logs) {
           log(
-            url,
-            name: 'PATCH',
+            'PATCH : $url',
+            name: 'Http Network',
             error: json.encode({
               'url': url,
               'body': body,
@@ -224,8 +224,8 @@ class HttpNetwork {
       );
       if (logs) {
         log(
-          url,
-          name: 'GET',
+          'DELETE : $url',
+          name: 'Http Network',
           error: json.encode({
             'url': url,
             'response': {
