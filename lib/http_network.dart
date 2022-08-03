@@ -1,10 +1,12 @@
 library http_network;
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'dart:developer' as developer;
 
 part 'response.dart';
 part 'exceptions.dart';
@@ -44,14 +46,22 @@ class HttpNetwork {
 
       // Print Logs from response if logs is true.
       if (logs) {
-        log(
+        developer.log(
           url,
           name: 'GET',
-          error: response.body,
+          error: json.encode({
+            'url': url,
+            'headers': headers,
+            'response': {
+              'statusCode': response.statusCode,
+              'headers': response.headers,
+              'body': response.body,
+            },
+          }),
         );
       }
 
-      return handle(response);
+      return _handle(response);
     } on TimeoutException catch (e) {
       throw e.message.toString();
     } on SocketException catch (e) {
@@ -88,20 +98,43 @@ class HttpNetwork {
           log(
             url,
             name: 'POST',
-            error: response.body,
+            error: json.encode({
+              'url': url,
+              'headers': headers,
+              'body': body,
+              'files': files,
+              'response': {
+                'statusCode': response.statusCode,
+                'headers': response.headers,
+                'body': response.body,
+              },
+            }),
           );
         }
-        return handle(response);
+        return _handle(response);
       } else {
-        final response = await http.post(Uri.parse(url));
+        final response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: body,
+        );
         if (logs) {
           log(
             url,
             name: 'POST',
-            error: response.body,
+            error: json.encode({
+              'url': url,
+              'headers': headers,
+              'body': body,
+              'response': {
+                'statusCode': response.statusCode,
+                'headers': response.headers,
+                'body': response.body,
+              },
+            }),
           );
         }
-        return handle(response);
+        return _handle(response);
       }
     } on TimeoutException catch (e) {
       throw e.toString();
@@ -140,20 +173,43 @@ class HttpNetwork {
           log(
             url,
             name: 'PATCH',
-            error: response.body,
+            error: json.encode({
+              'url': url,
+              'headers': headers,
+              'body': body,
+              'files': files,
+              'response': {
+                'statusCode': response.statusCode,
+                'headers': response.headers,
+                'body': response.body,
+              },
+            }),
           );
         }
-        return handle(response);
+        return _handle(response);
       } else {
-        final response = await http.patch(Uri.parse(url));
+        final response = await http.patch(
+          Uri.parse(url),
+          headers: headers,
+          body: body,
+        );
         if (logs) {
           log(
             url,
             name: 'PATCH',
-            error: response.body,
+            error: json.encode({
+              'url': url,
+              'headers': headers,
+              'body': body,
+              'response': {
+                'statusCode': response.statusCode,
+                'headers': response.headers,
+                'body': response.body,
+              },
+            }),
           );
         }
-        return handle(response);
+        return _handle(response);
       }
     } on TimeoutException catch (e) {
       throw e.toString();
@@ -179,11 +235,19 @@ class HttpNetwork {
       if (logs) {
         log(
           url,
-          name: 'DELETE',
-          error: response.body,
+          name: 'GET',
+          error: json.encode({
+            'url': url,
+            'headers': headers,
+            'response': {
+              'statusCode': response.statusCode,
+              'headers': response.headers,
+              'body': response.body,
+            },
+          }),
         );
       }
-      return handle(response);
+      return _handle(response);
     } on TimeoutException catch (e) {
       throw e.toString();
     } on SocketException catch (e) {
@@ -196,7 +260,7 @@ class HttpNetwork {
   }
 
   // Handle response
-  Response handle(http.Response response) {
+  Response _handle(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 400) {
       return Response(
         statusCode: response.statusCode,

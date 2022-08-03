@@ -9,28 +9,15 @@ void main() {
   group('Http Network GET', () {
     test('Test Success', () async {
       try {
-        final response = await network.get('https://mock.codes/200', logs: true);
+        final response = await network.get('https://mock.codes/200');
         log(response.body);
       } on ClientErrorException catch (e) {
-        log(e.toString());
-        log('Status Code : ${e.statusCode}');
-        log('Body : ${e.body}');
-        log('Message : ${e.message}');
         expect(e, isA<ClientErrorException>());
       } on ServerErrorException catch (e) {
-        log(e.toString());
-        log('Status Code : ${e.statusCode}');
-        log('Body : ${e.body}');
-        log('Message : ${e.message}');
         expect(e, isA<ServerErrorException>());
       } on UnknownErrorException catch (e) {
-        log(e.toString());
-        log('Status Code : ${e.statusCode}');
-        log('Body : ${e.body}');
-        log('Message : ${e.message}');
         expect(e, isA<UnknownErrorException>());
       } catch (e) {
-        log(e.toString());
         expect(e, isA<Exception>());
       }
     });
