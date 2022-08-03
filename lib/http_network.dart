@@ -51,10 +51,8 @@ class HttpNetwork {
           name: 'GET',
           error: json.encode({
             'url': url,
-            'headers': headers,
             'response': {
-              'statusCode': response.statusCode,
-              'headers': response.headers,
+              'code': response.statusCode,
               'body': json.decode(response.body),
             },
           }),
@@ -100,12 +98,10 @@ class HttpNetwork {
             name: 'POST',
             error: json.encode({
               'url': url,
-              'headers': headers,
               'body': body,
               'files': files,
               'response': {
-                'statusCode': response.statusCode,
-                'headers': response.headers,
+                'code': response.statusCode,
                 'body': json.decode(response.body),
               },
             }),
@@ -124,11 +120,9 @@ class HttpNetwork {
             name: 'POST',
             error: json.encode({
               'url': url,
-              'headers': headers,
               'body': body,
               'response': {
-                'statusCode': response.statusCode,
-                'headers': response.headers,
+                'code': response.statusCode,
                 'body': json.decode(response.body),
               },
             }),
@@ -175,12 +169,10 @@ class HttpNetwork {
             name: 'PATCH',
             error: json.encode({
               'url': url,
-              'headers': headers,
               'body': body,
               'files': files,
               'response': {
-                'statusCode': response.statusCode,
-                'headers': response.headers,
+                'code': response.statusCode,
                 'body': json.decode(response.body),
               },
             }),
@@ -199,11 +191,9 @@ class HttpNetwork {
             name: 'PATCH',
             error: json.encode({
               'url': url,
-              'headers': headers,
               'body': body,
               'response': {
-                'statusCode': response.statusCode,
-                'headers': response.headers,
+                'code': response.statusCode,
                 'body': json.decode(response.body),
               },
             }),
@@ -238,10 +228,8 @@ class HttpNetwork {
           name: 'GET',
           error: json.encode({
             'url': url,
-            'headers': headers,
             'response': {
-              'statusCode': response.statusCode,
-              'headers': response.headers,
+              'code': response.statusCode,
               'body': json.decode(response.body),
             },
           }),
