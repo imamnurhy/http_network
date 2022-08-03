@@ -33,7 +33,7 @@ part 'exceptions.dart';
 ///
 /// ---
 class HttpNetwork {
-  final String _logName = 'Request';
+  final String _logName = 'Http';
   Future<Response> get(
     String url, {
     Map<String, String> headers = const {},
