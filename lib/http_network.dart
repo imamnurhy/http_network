@@ -55,7 +55,7 @@ class HttpNetwork {
             'response': {
               'statusCode': response.statusCode,
               'headers': response.headers,
-              'body': json.encode(response.body),
+              'body': json.decode(response.body),
             },
           }),
         );
@@ -106,7 +106,7 @@ class HttpNetwork {
               'response': {
                 'statusCode': response.statusCode,
                 'headers': response.headers,
-                'body': json.encode(response.body),
+                'body': json.decode(response.body),
               },
             }),
           );
@@ -129,7 +129,7 @@ class HttpNetwork {
               'response': {
                 'statusCode': response.statusCode,
                 'headers': response.headers,
-                'body': json.encode(response.body),
+                'body': json.decode(response.body),
               },
             }),
           );
@@ -181,7 +181,7 @@ class HttpNetwork {
               'response': {
                 'statusCode': response.statusCode,
                 'headers': response.headers,
-                'body': json.encode(response.body),
+                'body': json.decode(response.body),
               },
             }),
           );
@@ -204,7 +204,7 @@ class HttpNetwork {
               'response': {
                 'statusCode': response.statusCode,
                 'headers': response.headers,
-                'body': json.encode(response.body),
+                'body': json.decode(response.body),
               },
             }),
           );
@@ -242,7 +242,7 @@ class HttpNetwork {
             'response': {
               'statusCode': response.statusCode,
               'headers': response.headers,
-              'body': json.encode(response.body),
+              'body': json.decode(response.body),
             },
           }),
         );
