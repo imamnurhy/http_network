@@ -15,6 +15,17 @@ and the Flutter guide for
 
 Pakcage for handle reqeusts to restful api with handle error and response.
 
+## How to install
+
+Open your pubspec.yaml file and add the following line:
+
+```
+dependencies:
+  http_network:
+    git:
+      url: url_to_repository
+``` 
+
 ## Features
 
 1. GET
