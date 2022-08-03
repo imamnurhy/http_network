@@ -1,3 +1,5 @@
+part of 'http_network.dart';
+
 /// Client Error Exception
 /// ---
 /// When error statu code server is 4xx.

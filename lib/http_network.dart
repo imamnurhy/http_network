@@ -5,8 +5,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:http_network/response.dart';
-import 'exceptions.dart';
+
+part 'response.dart';
+part 'exceptions.dart';
 
 /// Package Http Network
 /// ---

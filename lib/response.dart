@@ -1,3 +1,5 @@
+part of 'http_network.dart';
+
 class Response {
   Response({
     required this.statusCode,
