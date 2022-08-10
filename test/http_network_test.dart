@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_network/http_network.dart';
 
@@ -26,6 +27,7 @@ void main() {
       try {
         await network.get('https://mock.codes/404');
       } on ClientErrorException catch (e) {
+        if (kDebugMode) print(e);
         expect(e.statusCode, 404);
       }
     });

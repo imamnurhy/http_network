@@ -137,8 +137,8 @@ class HttpNetwork {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on Exception catch (e) {
-      throw e.toString();
+    } on Exception {
+      rethrow;
     }
   }
 
@@ -208,8 +208,8 @@ class HttpNetwork {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on Exception catch (e) {
-      throw e.toString();
+    } on Exception {
+      rethrow;
     }
   }
 
@@ -243,8 +243,8 @@ class HttpNetwork {
       throw e.message;
     } on FormatException catch (e) {
       throw e.message;
-    } on Exception catch (e) {
-      throw e.toString();
+    } on Exception {
+      rethrow;
     }
   }
 
