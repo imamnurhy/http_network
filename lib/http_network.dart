@@ -75,7 +75,7 @@ class HttpNetwork {
   Future<Response> post(
     String url, {
     Map<String, String> headers = const {},
-    Map<String, String> body = const {},
+    dynamic body = const {},
     Map<String, String> files = const {},
     bool logs = false,
   }) async {
@@ -145,7 +145,7 @@ class HttpNetwork {
   Future<Response> patch(
     String url, {
     Map<String, String> headers = const {},
-    Map<String, String> body = const {},
+    dynamic body = const {},
     Map<String, String> files = const {},
     bool logs = false,
   }) async {
