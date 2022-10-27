@@ -88,7 +88,7 @@ class HttpNetwork {
           request.files.add(await http.MultipartFile.fromPath(
             key,
             value,
-            filename: key,
+            filename: value.split('/').last,
           ));
         });
         var streamedResponse = await request.send();
