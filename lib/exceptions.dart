@@ -7,14 +7,14 @@ part of 'http_network.dart';
 /// ---
 class ClientErrorException implements Exception {
   ClientErrorException({
-    this.statusCode,
-    this.body,
+    required this.statusCode,
+    required this.body,
     this.message,
   });
 
   final int statusCode;
   final String body;
-  final String message;
+  final String? message;
 }
 
 /// Client Error Exception
@@ -24,14 +24,14 @@ class ClientErrorException implements Exception {
 /// ---
 class ServerErrorException implements Exception {
   ServerErrorException({
-    this.statusCode,
-    this.body,
+    required this.statusCode,
+    required this.body,
     this.message,
   });
 
   final int statusCode;
   final String body;
-  final String message;
+  final String? message;
 }
 
 /// Unknown Error Exception
@@ -41,12 +41,12 @@ class ServerErrorException implements Exception {
 /// ---
 class UnknownErrorException implements Exception {
   UnknownErrorException({
-    this.statusCode,
-    this.body,
+    required this.statusCode,
+    required this.body,
     this.message,
   });
 
   final int statusCode;
   final String body;
-  final String message;
+  final String? message;
 }
