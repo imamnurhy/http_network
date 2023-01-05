@@ -1,17 +1,13 @@
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_network/http_network.dart';
 
 void main() {
-  final HttpNetwork network = HttpNetwork();
+  HttpNetwork network = HttpNetwork(logs: true);
 
   group('Http Network GET', () {
     test('Test Success', () async {
       try {
-        final response = await network.get('https://mock.codes/200');
-        log(response.body);
+        await network.get('https://mock.codes/200');
       } on ClientErrorException catch (e) {
         expect(e, isA<ClientErrorException>());
       } on ServerErrorException catch (e) {
@@ -27,7 +23,6 @@ void main() {
       try {
         await network.get('https://mock.codes/404');
       } on ClientErrorException catch (e) {
-        if (kDebugMode) print(e);
         expect(e.statusCode, 404);
       }
     });

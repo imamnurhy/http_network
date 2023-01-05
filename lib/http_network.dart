@@ -33,33 +33,20 @@ part 'exceptions.dart';
 ///
 /// ---
 class HttpNetwork {
+  const HttpNetwork({
+    this.logs = false,
+  });
+
   final String _logName = 'Http';
+  final bool logs;
+
   Future<Response> get(
     String url, {
     Map<String, String> headers = const {},
-    bool logs = false,
   }) async {
     try {
-      final http.Response response = await http.get(
-        Uri.parse(url),
-        headers: headers,
-      );
-
-      // Print Logs from response if logs is true.
-      if (logs) {
-        developer.log(
-          'GET : $url',
-          name: _logName,
-          error: json.encode({
-            'url': url,
-            'response': {
-              'code': response.statusCode,
-              'body': json.decode(response.body),
-            },
-          }),
-        );
-      }
-
+      final http.Response response = await http.get(Uri.parse(url), headers: headers);
+      _log(response); // Make log request
       return _handle(response);
     } on TimeoutException catch (e) {
       throw e.message.toString();
@@ -77,7 +64,6 @@ class HttpNetwork {
     Map<String, String> headers = const {},
     dynamic body = const {},
     Map<String, String> files = const {},
-    bool logs = false,
   }) async {
     try {
       if (files.isNotEmpty) {
@@ -93,21 +79,9 @@ class HttpNetwork {
         });
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
-        if (logs) {
-          log(
-            'POST : $url',
-            name: _logName,
-            error: json.encode({
-              'url': url,
-              'body': body,
-              'files': files,
-              'response': {
-                'code': response.statusCode,
-                'body': json.decode(response.body),
-              },
-            }),
-          );
-        }
+
+        _log(response, body: body, files: files); // Make log request
+
         return _handle(response);
       } else {
         final response = await http.post(
@@ -115,20 +89,9 @@ class HttpNetwork {
           headers: headers,
           body: body,
         );
-        if (logs) {
-          log(
-            'POST : $url',
-            name: _logName,
-            error: json.encode({
-              'url': url,
-              'body': body,
-              'response': {
-                'code': response.statusCode,
-                'body': json.decode(response.body),
-              },
-            }),
-          );
-        }
+
+        _log(response, body: body); // Make log request
+
         return _handle(response);
       }
     } on TimeoutException catch (e) {
@@ -147,7 +110,6 @@ class HttpNetwork {
     Map<String, String> headers = const {},
     dynamic body = const {},
     Map<String, String> files = const {},
-    bool logs = false,
   }) async {
     try {
       if (files.isNotEmpty) {
@@ -164,21 +126,8 @@ class HttpNetwork {
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
 
-        if (logs) {
-          log(
-            'PATCH : $url',
-            name: _logName,
-            error: json.encode({
-              'url': url,
-              'body': body,
-              'files': files,
-              'response': {
-                'code': response.statusCode,
-                'body': json.decode(response.body),
-              },
-            }),
-          );
-        }
+        _log(response, body: body, files: files); // Make log request
+
         return _handle(response);
       } else {
         final response = await http.patch(
@@ -186,20 +135,9 @@ class HttpNetwork {
           headers: headers,
           body: body,
         );
-        if (logs) {
-          log(
-            'PATCH : $url',
-            name: _logName,
-            error: json.encode({
-              'url': url,
-              'body': body,
-              'response': {
-                'code': response.statusCode,
-                'body': json.decode(response.body),
-              },
-            }),
-          );
-        }
+
+        _log(response, body: body); // Make log request
+
         return _handle(response);
       }
     } on TimeoutException catch (e) {
@@ -216,26 +154,15 @@ class HttpNetwork {
   Future<Response> delete(
     String url, {
     Map<String, String> headers = const {},
-    bool logs = false,
   }) async {
     try {
       final http.Response response = await http.delete(
         Uri.parse(url),
         headers: headers,
       );
-      if (logs) {
-        log(
-          'DELETE : $url',
-          name: _logName,
-          error: json.encode({
-            'url': url,
-            'response': {
-              'code': response.statusCode,
-              'body': json.decode(response.body),
-            },
-          }),
-        );
-      }
+
+      _log(response); // Make log request
+
       return _handle(response);
     } on TimeoutException catch (e) {
       throw e.toString();
@@ -270,6 +197,29 @@ class HttpNetwork {
         statusCode: response.statusCode,
         body: response.body,
       );
+    }
+  }
+
+  // Create log
+  void _log(
+    http.Response response, {
+    dynamic body = const {},
+    Map<String, String> files = const {},
+  }) {
+    if (this.logs) {
+      developer.log(
+        '${response.request}',
+        name: 'Http',
+        error: json.encode({
+          'code': response.statusCode,
+          'datetime': DateTime.now().toIso8601String(),
+          'body': body,
+          'files': files,
+          'response': json.decode(response.body),
+        }),
+      );
+    } else {
+      developer.log('${response.request}', name: 'Http');
     }
   }
 }
