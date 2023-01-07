@@ -2,11 +2,12 @@ library http_network;
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
+
+import 'package:http_network/http_status_code.dart';
 
 part 'response.dart';
 part 'exceptions.dart';
@@ -180,21 +181,25 @@ class HttpNetwork {
     if (response.statusCode >= 200 && response.statusCode < 400) {
       return Response(
         statusCode: response.statusCode,
+        message: statusMessages['${response.statusCode}'],
         body: response.body,
       );
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       throw ClientErrorException(
         statusCode: response.statusCode,
+        message: statusMessages['${response.statusCode}'],
         body: response.body,
       );
     } else if (response.statusCode >= 500 && response.statusCode < 600) {
       throw ServerErrorException(
         statusCode: response.statusCode,
+        message: statusMessages['${response.statusCode}'],
         body: response.body,
       );
     } else {
       throw UnknownErrorException(
         statusCode: response.statusCode,
+        message: statusMessages['${response.statusCode}'],
         body: response.body,
       );
     }
@@ -215,7 +220,7 @@ class HttpNetwork {
           'datetime': DateTime.now().toIso8601String(),
           'body': body,
           'files': files,
-          'response': json.decode(response.body),
+          'response': json.decode(response.body)
         }),
       );
     } else {
