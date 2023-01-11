@@ -38,7 +38,6 @@ class HttpNetwork {
     this.logs = false,
   });
 
-  final String _logName = 'Http';
   final bool logs;
 
   Future<Response> get(
