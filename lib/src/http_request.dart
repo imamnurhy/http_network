@@ -57,13 +57,7 @@ class HttpRequest {
         return _responseHandle.handle(response.statusCode, response.body);
       }
       throw Exception('Request Error : HTTP Method Not Defined!!');
-    } on TimeoutException catch (e) {
-      throw e.message.toString();
-    } on SocketException catch (e) {
-      throw e.message;
-    } on FormatException catch (e) {
-      throw e.message;
-    } on Exception {
+    } catch (e) {
       rethrow;
     }
   }
