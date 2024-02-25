@@ -26,8 +26,6 @@ class HttpRequest {
           request.fields.addAll(body);
           request.fields['_method'] = httpMultipartRequestMethod;
 
-          log('Request Fileds : ${request.fields}');
-
           files.forEach((key, value) async {
             request.files.add(await http.MultipartFile.fromPath(
               key,
