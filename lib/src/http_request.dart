@@ -19,9 +19,13 @@ class HttpRequest {
       if (method == HttpMethod.POST || method == HttpMethod.PATCH) {
         if (files.isNotEmpty) {
           String httpMultipartRequestMethod = method == HttpMethod.POST ? 'POST' : 'PATCH';
-          final request = http.MultipartRequest(httpMultipartRequestMethod, Uri.parse(url));
+
+          final request = http.MultipartRequest('POST', Uri.parse(url));
+
           request.headers.addAll(headers);
+          request.fields['_method'] = httpMultipartRequestMethod;
           request.fields.addAll(body);
+
           files.forEach((key, value) async {
             request.files.add(await http.MultipartFile.fromPath(
               key,
