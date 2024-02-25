@@ -5,9 +5,9 @@ class ResponseHandle {
     if (statusCode >= 200 && statusCode < 400) {
       return body;
     } else if (statusCode >= 400 && statusCode < 500) {
-      throw ClientException(body);
+      throw ClientException(statusCode, body);
     } else if (statusCode >= 500 && statusCode < 600) {
-      throw ServerException(body);
+      throw ServerException(statusCode, body);
     } else {
       throw Exception(body);
     }

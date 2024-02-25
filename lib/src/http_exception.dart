@@ -1,11 +1,13 @@
 part of 'package:http_network/http_network.dart';
 
 class ClientException implements Exception {
-  ClientException(this.error);
+  ClientException(this.statusCode, this.error);
+  final int statusCode;
   final String error;
 }
 
 class ServerException implements Exception {
-  ServerException(this.error);
+  ServerException(this.statusCode, this.error);
+  final int statusCode;
   final String error;
 }
