@@ -1,6 +1,6 @@
 name: http_network
 description: Project for handle request to http
-version: 3.0.0
+version: 3.1.0
 homepage: none
 
 environment:
