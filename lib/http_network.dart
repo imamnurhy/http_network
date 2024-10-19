@@ -1,8 +1,8 @@
 library http_network;
 
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -10,8 +10,6 @@ part 'src/http_exception.dart';
 part 'src/response_handle.dart';
 part 'src/http_request.dart';
 part 'src/http_method.dart';
-part 'src/http_response.dart';
-part 'src/multipart_request.dart';
 
 /// Package Http Network
 /// ---
@@ -35,71 +33,62 @@ part 'src/multipart_request.dart';
 ///
 /// ---
 class HttpNetwork {
-  Future<HttpResponse> get(
+  final HttpRequest _httpRequest = HttpRequest();
+  Future<String> get(
     String url, {
     Map<String, String> headers = const {},
   }) async {
     try {
-      final HttpResponse response = await HttpRequest().request(url, headers: headers);
-      return response;
+      return _httpRequest.request(url, headers: headers);
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<HttpResponse> post(
+  Future<String> post(
     String url, {
     Map<String, String> headers = const {},
     dynamic body = const {},
-    Map<String, dynamic>? files,
-    Function(int bytes, int totalBytes)? progressCallback,
+    Map<String, String> files = const {},
   }) async {
     try {
-      final HttpResponse response = await HttpRequest().request(
+      return _httpRequest.request(
         url,
         method: HttpMethod.POST,
         headers: headers,
         body: body,
         files: files,
       );
-      return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<HttpResponse> patch(
+  Future<String> patch(
     String url, {
     Map<String, String> headers = const {},
     dynamic body = const {},
-    Map<String, dynamic>? files,
-    Function(int bytes, int totalBytes)? progressCallback,
+    Map<String, String> files = const {},
   }) async {
     try {
-      final HttpResponse response = await HttpRequest().request(
+      return _httpRequest.request(
         url,
         method: HttpMethod.PATCH,
         headers: headers,
         body: body,
         files: files,
       );
-      return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<HttpResponse> delete(
+  Future<String> delete(
     String url, {
     Map<String, String> headers = const {},
   }) async {
     try {
-      final HttpResponse response = await HttpRequest().request(
-        url,
-        method: HttpMethod.DELETE,
-        headers: headers,
-      );
-      return response;
+      return _httpRequest.request(url, method: HttpMethod.DELETE, headers: headers);
     } catch (e) {
       rethrow;
     }

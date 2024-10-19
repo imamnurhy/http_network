@@ -9,7 +9,7 @@ void main() {
   group('Http Network GET', () {
     test('Test Success', () async {
       final response = await network.get('https://mock.codes/200');
-      final body = json.decode(response.body);
+      final body = json.decode(response);
       expect(body['statusCode'], 200);
     });
 
