@@ -1,6 +1,6 @@
 name: http_network
 description: Project for handle request to http
-version: 0.0.1
+version: 3.0.0
 homepage: none
 
 environment:
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  http: ^0.13.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
